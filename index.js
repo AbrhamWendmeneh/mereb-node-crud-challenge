@@ -1,16 +1,15 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const bodyParser = require("body-parser");
+const uuid = require("uuid");
+const cors = require("cors");
+const app = express();
+const router = require("./routes/personRoutes");
+const persons = require("./db/database");
 
-let persons = [{
-    id: '1',
-    name: 'Sam',
-    age: '26',
-    hobbies: []    
-}] //This is your in memory database
-
-app.set('db', persons)
-//TODO: Implement crud of person
-
+app.use(cors());
+app.use(bodyParser.json({ extended: false }));
+app.use("/person", router);
+app.set("db", persons);
 if (require.main === module) {
     app.listen(3000)
 }
